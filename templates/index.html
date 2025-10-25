@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block header %}
+
+<h1>Hola desde una plantilla HTML</h1>
+
+<h1>{{ titulo }}</h1>
+<ul>
+    {% for Operaciones in listado %}
+        <li>{{ Operaciones }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+

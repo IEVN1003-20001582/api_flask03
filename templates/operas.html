@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+    {% block header %}
+
+      <h1>Operaciones</h1>
+
+      <form action="" method="post">
+        <div class="form-group">
+          <label for="numero1">Número 1:</label>
+          <input type="number" class="form-control" id="numero1" name="numero1" 
+          >
+        </div>
+        <div class="form-group">
+          <label for="numero2">Número 2:</label>
+          <input type="number" class="form-control" id="numero2" name="numero2" 
+          >
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+      </form>
+      <h1>Resultado: {{ resultado }}</h1>
+
+      {% endblock %}
