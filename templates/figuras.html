@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block header %}
+
+{% import '_macros.html' as macro %}
+
+<form action="" method="post" class="form-control">
+    <h1>Calculo de Figuras</h1>
+    {{ macro.campoNuevo(form.figura) }}
+    <div id="parametros">
+        <div id="triángulo" style="display: none;">
+            {{ macro.campoNuevo(form.base) }}
+            {{ macro.campoNuevo(form.altura) }}
+        </div>
+        <div id="rectángulo" style="display: none;">
+            {{ macro.campoNuevo(form.base) }}
+            {{ macro.campoNuevo(form.altura) }}
+        </div>
+        <div id="círculo" style="display: none;">
+            {{ macro.campoNuevo(form.radio) }}
+        </div>
+        <div id="pentágono" style="display: none;">
+            {{ macro.campoNuevo(form.lado) }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+<h2>Figura Seleccionada: {{ form.figura.data }}</h2>
+<h2>Área Calculada:</h2>
+
+
+
+
+
+
+{% endblock %}

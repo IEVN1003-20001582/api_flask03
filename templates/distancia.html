@@ -2,6 +2,19 @@
 
 {% block header %}
 
-<h1>Distancia</h1>
+
+
+    {% import "_macros.html" as macro %}
+    <h1>Distancia</h1>
+    <form action="" method="post">
+        {{ macro.campo1("x1","Ingrese X1", "number") }}
+        {{ macro.campo1("y1","Ingrese Y1", ) }}
+        {{ macro.campo1("x2","Ingrese X2") }}
+        {{ macro.campo1("y2","Ingrese Y2") }}
+ 
+
+    </form>
+    
+
 
 {% endblock %}

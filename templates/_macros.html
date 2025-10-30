@@ -1,0 +1,22 @@
+{% macro campo1(name,placeholder,type="text") %}
+  <div class="form-group">
+          <label for="{{ name }}">{{ placeholder }}:</label>
+          <input type="{{ type }}" class="form-control" id="{{ name }}" name="{{ name }}" placeholder="{{ placeholder }}">
+        </div>  
+{% endmacro %}
+
+
+{% macro campoNuevo(field) %}
+  <div class="form-group">
+    <label for="{{ field.id }}">{{ field.label }}</label>
+    {{ field()|safe }}
+    {% if field.errors %}
+      <ul class=errors>
+      {% for error in field.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endmacro %}
+
