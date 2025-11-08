@@ -1,31 +1,29 @@
-from wtforms import Form, FloatField, validators, EmailField
-from wtforms import StringField, SubmitField, IntegerField, DecimalField, SelectField, RadioField, TextAreaField, PasswordField, BooleanField, DateField, DateTimeField, TimeField, FileField, FieldList, FormField
+from wtforms import DateField, Form, StringField, IntegerField, EmailField, SubmitField, RadioField, validators, SelectMultipleField
+from wtforms.validators import DataRequired, Length, NumberRange
+import math
+from wtforms import Form, StringField, IntegerField, RadioField, validators
+from wtforms.fields import EmailField, DateField
 
 class UserForm(Form):
-    matricula = IntegerField('matricula', 
-                              [validators.DataRequired(message="La matrícula es obligatoria."),
-                               validators.NumberRange(min=1000, max=9999, message="La matrícula debe ser un número entre 1000 y 9999.")
-                      ])
-    nombre = StringField('Nombre', 
-                         [validators.DataRequired(message="El nombre es obligatorio."),
-                          validators.Length(min=2, max=100, message="El nombre debe tener entre 2 y 100 caracteres.")
-                         ])
-    apellido = StringField('Apellido', 
-                         [validators.DataRequired(message="El apellido es obligatorio."),
-                          validators.Length(min=2, max=100, message="El apellido debe tener entre 2 y 100 caracteres.")
-                         ])
-    correo = EmailField('correo', 
-                        [validators.DataRequired(message="El correo es obligatorio."),
-                            validators.Email(message="El correo no es válido.")
-                            ])
-    edad = IntegerField('Edad',
-                      [validators.DataRequired(message="La edad es obligatoria."),
-                       validators.NumberRange(min=1, max=120, message="La edad debe estar entre 1 y 120 años.")])
-    
-
+    matricula = IntegerField('Matrícula', [
+        validators.DataRequired(message="La matrícula es obligatoria."),
+        validators.NumberRange(min=1000, max=9999, message="Debe estar entre 1000 y 9999.")
+    ])
+    nombre = StringField('Nombre', [
+        validators.DataRequired(message="El nombre es obligatorio."),
+        validators.Length(min=2, max=100)
+    ])
+    apellido = StringField('Apellido', [
+        validators.DataRequired(message="El apellido es obligatorio."),
+        validators.Length(min=2, max=100)
+    ])
+    correo = EmailField('Correo', [
+        validators.DataRequired(message="El correo es obligatorio."),
+        validators.Email(message="Correo inválido.")
+    ])
 
 class FiguraForm(Form):
-    figura = RadioField('Selecciona la figura', choices=[
+    figura = RadioField('Figura', choices=[
         ('triangulo', 'Triángulo'),
         ('cuadrado', 'Cuadrado'),
         ('circulo', 'Círculo'),
@@ -43,30 +41,29 @@ class FiguraForm(Form):
         rv = Form.validate(self)
         if not rv:
             return False
-
-        figura = self.figura.data
         errores = False
-
-        if figura in ['triangulo', 'rectangulo']:
-            if self.base.data is None or self.base.data <= 0:
-                self.base.errors.append("La base debe ser un número positivo.")
+        if self.figura.data in ['triangulo', 'rectangulo']:
+            if not self.base.data or self.base.data <= 0:
+                self.base.errors.append("La base debe ser positiva.")
                 errores = True
-            if self.altura.data is None or self.altura.data <= 0:
-                self.altura.errors.append("La altura debe ser un número positivo.")
+            if not self.altura.data or self.altura.data <= 0:
+                self.altura.errors.append("La altura debe ser positiva.")
                 errores = True
-        elif figura == 'circulo':
-            if self.radio.data is None or self.radio.data <= 0:
-                self.radio.errors.append("El radio debe ser un número positivo.")
+        elif self.figura.data == 'circulo':
+            if not self.radio.data or self.radio.data <= 0:
+                self.radio.errors.append("El radio debe ser positivo.")
                 errores = True
-        elif figura in ['cuadrado', 'pentagono']:
-            if self.lado.data is None or self.lado.data <= 0:
-                self.lado.errors.append("El lado debe ser un número positivo.")
+        elif self.figura.data in ['cuadrado', 'pentagono']:
+            if not self.lado.data or self.lado.data <= 0:
+                self.lado.errors.append("El lado debe ser positivo.")
                 errores = True
 
         return not errores
-
-
-   
     
 
-    
+class pizzaForm(Form):
+    nombre = StringField('Nombre', validators=[DataRequired()])
+    direccion = StringField('Dirección', validators=[DataRequired()])
+    telefono = StringField('Teléfono', validators=[DataRequired()])
+    num_pizzas = IntegerField('Número de Pizzas', validators=[DataRequired()])
+    submit = SubmitField('Submit')

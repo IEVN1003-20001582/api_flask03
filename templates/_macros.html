@@ -6,17 +6,13 @@
 {% endmacro %}
 
 
-{% macro campoNuevo(field) %}
+{% macro campoNuevo(campo) %}
   <div class="form-group">
-    <label for="{{ field.id }}">{{ field.label }}</label>
-    {{ field()|safe }}
-    {% if field.errors %}
-      <ul class=errors>
-      {% for error in field.errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
+    {{ campo.label(class="control-label") }}
+    {{ campo(class="form-control") }}
+    {% for error in campo.errors %}
+      <span class="text-danger">{{ error }}</span>
+    {% endfor %}
   </div>
 {% endmacro %}
 

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzería Markthink - Pedido</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   
+    <style>
+        body { background-color: #FFF8E1 !important; color: #333; }
+        .pizzeria-title { color: #D93B3B; font-weight: bold; border-bottom: 3px solid #D93B3B; padding-bottom: 10px; }
+        .panel-custom { background-color: #fff; border: 1px solid #DDD; border-top: 5px solid #D93B3B;
+                        border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; }
+        .panel-box { border: 1px solid #C5C5C5; padding: 1rem; border-radius: 6px; background: #f9f9f9; }
+        .table thead { background-color: #F7F3E8; }
+        .btn-primary { background-color: #D93B3B; border-color: #C82333; }
+        .btn-primary:hover { background-color: #C82333; }
+        .btn-info { background-color: #F0AD4E; border-color: #E69A3C; color: #212529; }
+        .btn-info:hover { background-color: #E69A3C; color: #212529; }
+    </style>
+</head>
+ 
+<body class="container mt-4">
+ 
+<h2 class="text-center pizzeria-title mb-4">Pizzería Markthink</h2>
+ 
+<form method="post" novalidate>
+<div class="panel-custom">
+ 
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label>Nombre</label>
+            {{ form.nombre(class="form-control") }}
+        </div>
+        <div class="form-group col-md-4">
+            <label>Dirección</label>
+            {{ form.direccion(class="form-control") }}
+        </div>
+        <div class="form-group col-md-4">
+            <label>Teléfono</label>
+            {{ form.telefono(class="form-control") }}
+        </div>
+    </div>
+ 
+    <div class="row mt-3">
+ 
+        <div class="col-md-4 panel-box">
+            <h5>Tamaño Pizza</h5>
+            <div class="form-check"><input class="form-check-input" type="radio" name="tamannio" value="Chica"> Chica $40</div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="tamannio" value="Mediana"> Mediana $60</div>
+            <div class="form-check"><input class="form-check-input" type="radio" name="tamannio" value="Grande"> Grande $80</div>
+        </div>
+ 
+        <div class="col-md-4 panel-box">
+            <h5>Ingredientes</h5>
+            <div class="form-check"><input class="form-check-input" type="checkbox" name="ingredientes" value="Jamón"> Jamón $10</div>
+            <div class="form-check"><input class="form-check-input" type="checkbox" name="ingredientes" value="Piña"> Piña $10</div>
+            <div class="form-check"><input class="form-check-input" type="checkbox" name="ingredientes" value="Champiñones"> Champiñones $10</div>
+        </div>
+ 
+        <div class="col-md-4 panel-box">
+            <h5>Num. de Pizzas</h5>
+            {{ form.num_pizzas(class="form-control mb-3") }}
+            <button type="submit" name="accion" value="agregar" class="btn btn-primary btn-block">Agregar</button>
+        </div>
+ 
+    </div>
+ 
+</div>
+ 
+ 
+<div class="row">
+ 
+    <div class="col-md-7 panel-custom">
+        <h4>Detalle del Pedido</h4>
+        <table class="table table-bordered bg-white mt-2">
+            <thead><tr><th>Tamaño</th><th>Ingredientes</th><th>Num. Pizzas</th><th>Subtotal</th><th></th></tr></thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr>
+                    <td>{{ pedido.tamannio }}</td>
+                    <td>{{ pedido.ingredientes | join(', ') }}</td>
+                    <td>{{ pedido.num_pizzas }}</td>
+                    <td>${{ pedido.subtotal }}</td>                
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" name="quitar" class="btn btn-danger btn-sm">Quitar último</button>
+        <button type="submit" name="accion" value="terminar" class="btn btn-success">Terminar</button>
+    </div>
+ 
+    <div class="col-md-5 panel-custom text-center">
+        <h4>Ventas del día</h4>
+ 
+        <ul class="list-unstyled mt-3">
+            {% for venta in ventas_dia %}
+            <li><strong>{{ venta.nombre }}</strong> total ${{ venta.total }}</li>
+            {% endfor %}
+        </ul>
+ 
+        {% if total_dia is not none %}
+        <p class="mt-3"><strong>Ventas totales del día:</strong> ${{ total_dia }}</p>
+        {% endif %}
+ 
+        <button type="submit" name="accion" value="ver_ventas" class="btn btn-info mt-3 btn-block">
+            Ventas totales por día
+        </button>
+ 
+    </div>
+ 
+</div>
+ 
+</form>
+ 
+</body>
+</html>
