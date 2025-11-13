@@ -2,7 +2,7 @@ import math
 from flask import Flask, jsonify, redirect, render_template, request, url_for;
 from flask import make_response, jsonify
 import json
-import forms
+import bases_flask.forms as forms
 
 
 app = Flask(__name__)
