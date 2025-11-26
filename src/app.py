@@ -6,8 +6,10 @@ from config import config
  
 app = Flask(__name__)
  
+ 
+
 conexion=MySQL(app)
-CORS(app, resources={"/Alumnos/": {"origins": "*"}})
+CORS(app, resources={r"/Alumnos/*": {"origins": "http://localhost:4200"}})
 
 @app.route('/Alumnos', methods=['GET'])
 def listar_alumnos():
